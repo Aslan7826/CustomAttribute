@@ -1,0 +1,55 @@
+void Main()
+{
+	
+	TryGet(new ScanBaseModel());
+}
+
+public void TryGet<T>(T model)
+{
+	
+    foreach(var property in typeof(T).GetProperties())
+    {
+        var scanParamId = property.GetCustomAttributes(typeof(ScanParamIdAttribute),false).FirstOrDefault() as ScanParamIdAttribute;
+		if(scanParamId != null)
+		{
+			scanParamId.Dump();
+		}
+    }
+}
+
+
+    public class ScanParamIdAttribute : Attribute
+    {
+        public ScanParamIdAttribute(int paramId) 
+        {
+            ScanParamId = paramId;
+        }
+        public int ScanParamId { get;  }
+    }
+	
+	public class ScanParamIdaaaAttribute : Attribute
+    {
+        public ScanParamIdaaaAttribute(int paramId) 
+        {
+            ScanParamId = paramId;
+        }
+        public int ScanParamId { get;  }
+    }
+// You can define other methods, fields, classes and namespaces here
+    public class ScanBaseModel 
+    {
+        /// <summary>
+        /// 節點Id
+        /// </summary>
+        public int NodeId { get; set; }
+        /// <summary>
+        /// 節點URL
+        /// </summary>
+        public string URL { get; set; }
+        /// <summary>
+        /// 啟用狀態
+        /// </summary>
+		[ScanParamIdaaa(9)]
+        [ScanParamId(11)]
+        public bool ScanEnable { get; set; }
+    }
